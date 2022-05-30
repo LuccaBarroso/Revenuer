@@ -4,15 +4,118 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/main_moneyQuantity_TextView"
+        android:layout_width="0dp"
+        android:layout_height="96dp"
+        android:gravity="bottom|center|left"
+        android:text="XXX,XX"
+        android:textSize="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/main_dollarSign_TextView"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/main_dollarSign_TextView"
+        android:layout_width="106dp"
+        android:layout_height="96dp"
+        android:gravity="bottom|right"
+        android:text="R$ "
+        android:textSize="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/main_receitasTitle_TextView"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="20dp"
+        android:text="Receitas"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_moneyQuantity_TextView" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_receitasTable_ConstraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="185dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_receitasTitle_TextView">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/main_receitasTable_RecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="183dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/main_despesasTitle_TextView"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="24dp"
+        android:text="Despesas"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_receitasTable_ConstraintLayout" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_despesasTable_ConstraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="201dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_despesasTitle_TextView">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/main_despesasTable_RecyclerView"
+            android:layout_width="409dp"
+            android:layout_height="199dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/main_graficoPopUp_Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="20dp"
+        android:text="Gráfico"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/main_historicoScreen_Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_despesasTable_ConstraintLayout" />
+
+    <Button
+        android:id="@+id/main_historicoScreen_Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="20dp"
+        android:text="Histórico"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/main_graficoPopUp_Button"
+        app:layout_constraintTop_toBottomOf="@+id/main_despesasTable_ConstraintLayout" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
