@@ -33,8 +33,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/login_credentials_ConstraintLayout"
-        android:layout_width="411dp"
-        android:layout_height="224dp"
+        android:layout_width="410dp"
+        android:layout_height="192dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toTopOf="@+id/login_registerScreen_TextView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,6 +83,7 @@
             android:textSize="17dp"
             app:layout_constraintBottom_toTopOf="@+id/login_email_TextAdress"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -94,6 +96,7 @@
             android:textSize="17dp"
             app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
