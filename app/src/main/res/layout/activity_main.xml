@@ -7,49 +7,55 @@
     tools:context=".activity.MainActivity">
 
     <TextView
-        android:id="@+id/main_moneyQuantity_TextView"
+        android:id="@+id/main_textview_amount"
         android:layout_width="0dp"
-        android:layout_height="96dp"
+        android:layout_height="90dp"
         android:gravity="bottom|center|left"
         android:text="XXX,XX"
-        android:textSize="50dp"
+        android:textSize="48dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/main_dollarSign_TextView"
+        app:layout_constraintStart_toEndOf="@+id/main_textview_sign"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/main_dollarSign_TextView"
-        android:layout_width="106dp"
-        android:layout_height="96dp"
+        android:id="@+id/main_textview_sign"
+        android:layout_width="86dp"
+        android:layout_height="90dp"
         android:gravity="bottom|right"
         android:text="R$ "
-        android:textSize="50dp"
+        android:textSize="48dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/main_receitasTitle_TextView"
+        android:id="@+id/main_textview_receitas"
         android:layout_width="0dp"
         android:layout_height="32dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
         android:text="Receitas"
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_moneyQuantity_TextView" />
+        app:layout_constraintTop_toBottomOf="@+id/main_textview_amount" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_receitasTable_ConstraintLayout"
+        android:id="@+id/ConstraintLayout_Receitas"
         android:layout_width="0dp"
         android:layout_height="185dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_receitasTitle_TextView">
+        app:layout_constraintTop_toBottomOf="@+id/main_textview_receitas">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/main_receitasTable_RecyclerView"
+            android:id="@+id/main_recyclerview_receitas"
             android:layout_width="0dp"
             android:layout_height="183dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -59,33 +65,34 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/main_despesasTitle_TextView"
+        android:id="@+id/main_textview_despesas"
         android:layout_width="0dp"
         android:layout_height="32dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
         android:text="Despesas"
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_receitasTable_ConstraintLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_Receitas" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_despesasTable_ConstraintLayout"
+        android:id="@+id/ConstraintLayout_Despesas"
         android:layout_width="0dp"
         android:layout_height="201dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_despesasTitle_TextView">
+        app:layout_constraintTop_toBottomOf="@+id/main_textview_despesas">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/main_despesasTable_RecyclerView"
-            android:layout_width="409dp"
-            android:layout_height="199dp"
-            android:layout_marginStart="1dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="2dp"
+            android:id="@+id/main_recyclerview_despesas"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -93,29 +100,29 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/main_graficoPopUp_Button"
+        android:id="@+id/main_button_graph"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
         android:text="Gráfico"
         app:cornerRadius="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/main_historicoScreen_Button"
+        app:layout_constraintEnd_toStartOf="@+id/main_button_history"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_despesasTable_ConstraintLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_Despesas" />
 
     <Button
-        android:id="@+id/main_historicoScreen_Button"
+        android:id="@+id/main_button_history"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
         android:text="Histórico"
         app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/main_graficoPopUp_Button"
-        app:layout_constraintTop_toBottomOf="@+id/main_despesasTable_ConstraintLayout" />
+        app:layout_constraintStart_toEndOf="@+id/main_button_graph"
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_Despesas" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
