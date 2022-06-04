@@ -5,7 +5,7 @@
   * Register User function
   * Data Base for operations
 * App:
-  * Make Login Activity
+  * Make Login Activity ✅
   * Make Register Activity
   * Make Main Activity
   * Make History Activity
