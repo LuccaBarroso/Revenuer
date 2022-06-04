@@ -50,6 +50,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if(currentUser != null){
+            // TODO: Make "go-to-main" code
             // user is already logged in, can go to main
         }
     }

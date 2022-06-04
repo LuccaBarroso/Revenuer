@@ -8,12 +8,12 @@
     tools:context=".activity.LoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/login_appLogo_ConstraintLayout"
+        android:id="@+id/ConstraintLayout1"
         android:layout_width="411dp"
         android:layout_height="226dp"
         android:layout_marginTop="84dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/login_credentials_ConstraintLayout"
+        app:layout_constraintBottom_toTopOf="@+id/ConstraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +33,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/login_credentials_ConstraintLayout"
+        android:id="@+id/ConstraintLayout2"
         android:layout_width="0dp"
         android:layout_height="190dp"
         android:layout_marginStart="48dp"
@@ -42,7 +42,7 @@
         app:layout_constraintBottom_toTopOf="@+id/login_textview_register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_appLogo_ConstraintLayout">
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout1">
 
         <EditText
             android:id="@+id/login_edittext_email"
@@ -77,6 +77,7 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/background"
             android:fontFamily="@font/urbanist"
             android:text="Email"
             android:textColor="#FFFFFF"
@@ -109,22 +110,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_credentials_ConstraintLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout2" />
 
     <Button
         android:id="@+id/login_button_enter"
         android:layout_width="165dp"
         android:layout_height="60dp"
         android:layout_marginTop="24dp"
+        android:layout_marginBottom="100dp"
         android:autoText="false"
         android:backgroundTint="@color/blue"
         android:fontFamily="@font/urbanist"
         android:inputType="textCapSentences"
         android:text="Login"
         android:textIsSelectable="false"
-        android:textSize="17dp"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:cornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_textview_register"

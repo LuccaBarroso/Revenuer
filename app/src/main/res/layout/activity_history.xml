@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".activity.HistoryActivity">
 
     <TextView
@@ -12,9 +13,10 @@
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="48dp"
         android:gravity="bottom|center|left"
         android:text="Histórico"
+        android:textColor="#FFFFFF"
         android:textSize="50dp"
         app:layout_constraintBottom_toTopOf="@+id/ConstraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,32 +24,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/main_button_add"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginEnd="120dp"
-        android:layout_marginBottom="48dp"
-        android:text="+"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:cornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ConstraintLayout"
         android:layout_width="0dp"
         android:layout_height="473dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/main_button_add"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/history_textview_title">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/main_recyclerview_history"
@@ -60,6 +46,32 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/history_button_add"
+        android:layout_width="165dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="48dp"
+        android:autoText="false"
+        android:backgroundTint="@color/blue"
+        android:fontFamily="@font/urbanist"
+        android:inputType="textCapSentences"
+        android:text="Adicionar"
+        android:textIsSelectable="false"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:cornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout"
+        app:strokeColor="@color/gold"
+        app:strokeWidth="4dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

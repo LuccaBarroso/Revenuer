@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".activity.MainActivity">
 
     <TextView
@@ -12,6 +13,7 @@
         android:layout_height="90dp"
         android:gravity="bottom|center|left"
         android:text="XXX,XX"
+        android:textColor="#FFFFFF"
         android:textSize="48dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,6 +26,7 @@
         android:layout_height="90dp"
         android:gravity="bottom|right"
         android:text="R$ "
+        android:textColor="@color/gold"
         android:textSize="48dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +40,8 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:text="Receitas"
-        android:textSize="25dp"
+        android:textColor="#FFFFFF"
+        android:textSize="27dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +76,8 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:text="Despesas"
-        android:textSize="25dp"
+        android:textColor="#FFFFFF"
+        android:textSize="27dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
@@ -102,27 +107,39 @@
     <Button
         android:id="@+id/main_button_graph"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/blue"
+        android:inputType="textCapSentences"
         android:text="Gráfico"
-        app:cornerRadius="20dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:cornerRadius="40dp"
         app:layout_constraintEnd_toStartOf="@+id/main_button_history"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_Despesas" />
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_Despesas"
+        app:strokeColor="@color/gold"
+        app:strokeWidth="4dp" />
 
     <Button
         android:id="@+id/main_button_history"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/blue"
+        android:inputType="textCapSentences"
         android:text="Histórico"
-        app:cornerRadius="20dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:cornerRadius="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/main_button_graph"
-        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_Despesas" />
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_Despesas"
+        app:strokeColor="@color/gold"
+        app:strokeWidth="4dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
