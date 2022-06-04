@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "456185790063",
+    "project_id": "revenuer-32870",
+    "storage_bucket": "revenuer-32870.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:456185790063:android:066660c1b0428cd5a3d79a",
+        "android_client_info": {
+          "package_name": "com.example.revenuer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "456185790063-vqeaidph6db36dogtntglke2837su7d3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZX797ljpXLj63778YjeIzlRjYLeUJDgQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "456185790063-vqeaidph6db36dogtntglke2837su7d3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
