@@ -1,4 +1,4 @@
 # Revenuer
 ## Checklist
 * Firebase:
-* Authentication 
+  * Authentication 
