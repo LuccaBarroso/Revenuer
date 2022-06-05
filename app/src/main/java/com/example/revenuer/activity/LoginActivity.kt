@@ -68,8 +68,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
                 var isFormFilled = true
 
-                isFormFilled  =  isEmailFilled(email) && isFormFilled;
-                isFormFilled  =  isPasswordFilled(password) && isFormFilled;
+                isFormFilled  =  isFormFilled(email, mLoginEmail) && isFormFilled;
+                isFormFilled  =  isFormFilled(password, mLoginPassword) && isFormFilled;
 
                 if(isFormFilled){
                     //Login the user
@@ -96,18 +96,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
-    private fun isPasswordFilled(password: CharSequence): Boolean {
-        return if (password.isBlank()) {
-            mLoginPassword.error = "Este campo é obrigatório"
-            false
-        }else {
-            true
-        }
-    }
 
-    private fun isEmailFilled(email: CharSequence): Boolean {
-        return if (email.isBlank()) {
-            mLoginEmail.error = "Este campo é obrigatório"
+    private fun isFormFilled(value: CharSequence, mOfTheValue: EditText): Boolean {
+        return if (value.isBlank()) {
+            mOfTheValue.error = "Este campo é obrigatório"
             false
         }else {
             true

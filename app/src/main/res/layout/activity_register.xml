@@ -151,6 +151,7 @@
             android:ems="10"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
+            android:textColor="#FFFFFF"
             android:textSize="17dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
