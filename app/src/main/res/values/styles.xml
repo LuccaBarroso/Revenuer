@@ -5,11 +5,19 @@
     <style name="ContainerLine">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">52dp</item>
-        <item name="android:background">@drawable/container_line</item>
+        <item name="android:background">@drawable/shape_container_line</item>
     </style>
+
     <style name="ContainerBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">280dp</item>
-        <item name="android:background">@drawable/container_box</item>
+        <item name="android:background">@drawable/shape_container_box</item>
+    </style>
+
+    <style name="CredentialBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">52dp</item>
+        <item name="android:background">@drawable/shape_edit_text_credential</item>
+        <item name="android:padding">20dp</item>
     </style>
 </resources>
