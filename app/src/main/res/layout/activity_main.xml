@@ -7,6 +7,17 @@
     android:background="@color/background"
     tools:context=".activity.MainActivity">
 
+    <View
+        android:id="@+id/view2"
+        style="@style/ContainerLine"
+        android:layout_width="0dp"
+        android:layout_height="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_textview_amount" />
+
     <TextView
         android:id="@+id/main_textview_amount"
         android:layout_width="0dp"
@@ -22,7 +33,7 @@
 
     <TextView
         android:id="@+id/main_textview_sign"
-        android:layout_width="86dp"
+        android:layout_width="97dp"
         android:layout_height="90dp"
         android:gravity="bottom|right"
         android:text="R$ "
@@ -37,7 +48,7 @@
         android:layout_width="0dp"
         android:layout_height="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:text="Receitas"
         android:textColor="#FFFFFF"
@@ -67,6 +78,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/view3"
+        style="@style/ContainerLine"
+        android:layout_width="0dp"
+        android:layout_height="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_Receitas" />
 
     <TextView
         android:id="@+id/main_textview_despesas"

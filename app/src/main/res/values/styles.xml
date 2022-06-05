@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--The style of all app-->
+<resources>
+    <style name="ContainerLine">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">52dp</item>
+        <item name="android:background">@drawable/container_line</item>
+    </style>
+    <style name="ContainerBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">280dp</item>
+        <item name="android:background">@drawable/container_box</item>
+    </style>
+</resources>
