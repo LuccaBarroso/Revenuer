@@ -30,17 +30,17 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     private val handler = Handler(Looper.getMainLooper()!!)
 
     //1 - Declare an instance of FirebaseAuth
-    private lateinit var auth: FirebaseAuth
-    private lateinit var database: FirebaseDatabase;
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var mDatabase: FirebaseDatabase;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
         // 2 - Initialize Firebase Auth
-        auth = Firebase.auth
+        mAuth = Firebase.auth
         // Initialize Realtime database
-        database = Firebase.database
+        mDatabase = Firebase.database
 
         mRegisterName = findViewById(R.id.register_edittext_name);
         mRegisterPhone = findViewById(R.id.register_edittext_phone);
@@ -72,18 +72,18 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
         if(isFormFilled){
 
-            val usersRef = database.getReference("/users")
+            val usersRef = mDatabase.getReference("/users")
             val key = usersRef.push().key ?: ""
             val newUser = User(id = key, name = name, phone = phone, email = email);
             usersRef.child(key).setValue(newUser)
             Log.i("TAG", newUser.email);
 
-            auth.createUserWithEmailAndPassword(email, password)
+            mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success")
-                        val user = auth.currentUser
+                        val user = mAuth.currentUser
                         finish();
                     } else {
                         // If sign in fails, display a message to the user.
