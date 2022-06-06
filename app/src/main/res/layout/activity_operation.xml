@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.OperationActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blue"
+        android:backgroundTint="@color/blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintWidth_min="10dp">
+
+        <Button
+            android:id="@+id/operation_button_revenue"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/blue"
+            android:inputType="textCapSentences"
+            android:text="Receita"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:cornerRadius="15dp"
+            app:layout_constraintEnd_toStartOf="@+id/operation_button_expense"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_operation_title"
+            app:strokeColor="@color/background"
+            app:strokeWidth="6dp"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/operation_button_cancel"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/blue"
+            android:inputType="textCapSentences"
+            android:text="Cancelar"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:cornerRadius="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/operation_button_ok"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/background"
+            app:strokeWidth="6dp"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/operation_button_ok"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/background"
+            android:inputType="textCapSentences"
+            android:text="OK"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:cornerRadius="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/operation_button_cancel"
+            app:strokeColor="@color/background"
+            app:strokeWidth="6dp"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/operation_button_expense"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="12dp"
+            android:backgroundTint="@color/blue"
+            android:inputType="textCapSentences"
+            android:text="Despesa"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:cornerRadius="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/operation_button_revenue"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_operation_title"
+            app:strokeColor="@color/background"
+            app:strokeWidth="6dp"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/fragment_operation_title"
+            style="@style/ContainerGeneric1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="12dp"
+            android:gravity="center"
+            android:text="Sample Operação"
+            android:textColor="@color/white"
+            android:textSize="24dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/ContainerGeneric1"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:paddingTop="3dp"
+            android:text="Valor Monetário"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/operation_edittext_name" />
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/ContainerGeneric1"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:paddingTop="3dp"
+            android:text="Data"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/operation_edittext_value" />
+
+        <TextView
+            android:id="@+id/textView3"
+            style="@style/ContainerGeneric1"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:paddingTop="3dp"
+            android:text="Nome"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/operation_button_revenue" />
+
+        <EditText
+            android:id="@+id/operation_edittext_value"
+            style="@style/ContainerGeneric2"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="12dp"
+            android:inputType="numberDecimal"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="@+id/textView"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <EditText
+            android:id="@+id/operation_edittext_name"
+            style="@style/ContainerGeneric2"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="12dp"
+            android:inputType="text"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView3"
+            app:layout_constraintTop_toTopOf="@+id/textView3"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <Button
+            android:id="@+id/operation_button_date"
+            android:layout_width="0dp"
+            android:layout_height="82dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="12dp"
+            android:backgroundTint="@color/blue"
+            android:gravity="center"
+            android:inputType="textCapSentences"
+            android:text="dd/mm/yyyy"
+            android:textSize="21dp"
+            app:cornerRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView2"
+            app:strokeColor="@color/background"
+            app:strokeWidth="6dp"
+            tools:ignore="MissingConstraints" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

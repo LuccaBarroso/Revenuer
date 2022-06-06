@@ -1,5 +1,6 @@
 package com.example.revenuer.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.service.autofill.CustomDescription
 import android.util.Log
@@ -55,9 +56,8 @@ class HistoryActivity : AppCompatActivity(), View.OnClickListener {
         mOperationAdd.setOnClickListener(this)
     }
 
-    override fun onClick(p0: View?) {
-        var dialog = PopupFragment()
-
-        dialog.show(supportFragmentManager, "customPopup")
+    override fun onClick(view: View?) {
+        val it = Intent(this, OperationActivity::class.java)
+        startActivity(it)
     }
 }

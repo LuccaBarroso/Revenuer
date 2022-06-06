@@ -15,9 +15,10 @@
         <entry key="app/src/main/res/layout/activity_loading.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_operation.xml" value="0.39166666666666666" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.4162754303599374" />
         <entry key="app/src/main/res/layout/activity_task.xml" value="0.18177083333333333" />
-        <entry key="app/src/main/res/layout/fragment_popup.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_popup.xml" value="0.25" />
         <entry key="app/src/main/res/layout/operation_item.xml" value="0.5" />
         <entry key="app/src/main/res/layout/reusable.xml" value="0.33" />
       </map>
