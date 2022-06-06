@@ -27,32 +27,21 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private val handler =Handler(Looper.getMainLooper()!!)
 
     //1 - Declare an instance of FirebaseAuth
-    private lateinit var auth: FirebaseAuth
+    private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         // 2 - Initialize Firebase Auth
-        auth = Firebase.auth
+        mAuth = Firebase.auth
 
-        mLoginEmail = findViewById(R.id.login_edittext_email)
+        mLoginEmail = findViewById(R.id.register_edittext_email)
         mLoginPassword = findViewById(R.id.login_edittext_password)
         mLoginRegister = findViewById(R.id.login_textview_register)
         mLoginRegister.setOnClickListener(this);
         mLoginEnter = findViewById(R.id.login_button_enter)
         mLoginEnter.setOnClickListener(this);
-    }
-
-    //When initializing your Activity, check to see if the user is currently signed in.
-    public override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        if(currentUser != null) {
-            // TODO: make user logged in
-            // if user is already logged in, go to main
-        }
     }
 
     override fun onClick(view: View?) {
@@ -68,21 +57,20 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
                 var isFormFilled = true
 
-                isFormFilled  =  isEmailFilled(email) && isFormFilled;
-                isFormFilled  =  isPasswordFilled(password) && isFormFilled;
+                isFormFilled  =  isFormFilled(email, mLoginEmail) && isFormFilled;
+                isFormFilled  =  isFormFilled(password, mLoginPassword) && isFormFilled;
 
                 if(isFormFilled){
                     //Login the user
-                    auth.signInWithEmailAndPassword(email, password)
+                    mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInWithEmail:success")
-                                val user = auth.currentUser
+                                val user = mAuth.currentUser
                                 //Pass in the user data to the next activity
                                 //Go to the main activity
                                 val it = Intent(this, MainActivity::class.java);
-                                it.putExtra("user", user)
                                 startActivity(it)
                                 finish()
                             } else {
@@ -96,18 +84,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
-    private fun isPasswordFilled(password: CharSequence): Boolean {
-        return if (password.isBlank()) {
-            mLoginPassword.error = "Este campo é obrigatório"
-            false
-        }else {
-            true
-        }
-    }
 
-    private fun isEmailFilled(email: CharSequence): Boolean {
-        return if (email.isBlank()) {
-            mLoginEmail.error = "Este campo é obrigatório"
+    private fun isFormFilled(value: CharSequence, mOfTheValue: EditText): Boolean {
+        return if (value.isBlank()) {
+            mOfTheValue.error = "Este campo é obrigatório"
             false
         }else {
             true

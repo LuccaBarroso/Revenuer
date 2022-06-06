@@ -11,3 +11,11 @@
   * Make History Activity
   * Make Pop-ups Activity
   * Make Graph (Optional)
+* Design:
+  * Login Activity ✅
+  * Register Activity ✅
+  * Main Activity ✅
+  * History Activity
+    * Cardview
+  * Pop-ups Activity
+  * Graph (Optional)

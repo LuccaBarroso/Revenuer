@@ -44,13 +44,15 @@
         app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout1">
 
         <EditText
-            android:id="@+id/login_edittext_email"
+            android:id="@+id/register_edittext_email"
             style="@style/CredentialBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="24dp"
+            android:textColor="#FFFFFF"
+            android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -64,9 +66,11 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="37dp"
             android:layout_marginEnd="24dp"
+            android:textColor="#FFFFFF"
+            android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_edittext_email"
+            app:layout_constraintTop_toBottomOf="@+id/register_edittext_email"
             tools:ignore="SpeakableTextPresentCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -87,26 +91,28 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
             android:background="@color/background"
             android:fontFamily="@font/urbanist"
             android:hapticFeedbackEnabled="false"
             android:text="Email"
             android:textColor="#FFFFFF"
-            android:textSize="17dp"
+            android:textSize="18dp"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="10dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="78dp"
             android:background="@color/background"
             android:fontFamily="@font/urbanist"
             android:text="Senha"
             android:textColor="#FFFFFF"
-            android:textSize="17dp"
+            android:textSize="18dp"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="110dp" />
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
