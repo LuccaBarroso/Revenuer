@@ -107,8 +107,6 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
                 finish()
             }
             R.id.operation_button_right -> {
-
-
                 val name = mOperationName.text.toString().trim()
                 val value = mValue.text.toString().trim()
                 val date = mDateText.text.toString().trim()

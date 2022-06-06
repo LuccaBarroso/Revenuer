@@ -2,6 +2,7 @@ package com.example.revenuer.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.renderscript.Sampler
 import android.service.autofill.CustomDescription
 import android.util.Log
 import android.view.View
@@ -9,12 +10,10 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.revenuer.R
+import com.example.revenuer.entity.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -35,25 +34,32 @@ class HistoryActivity : AppCompatActivity(), View.OnClickListener {
         mAuth = Firebase.auth
         mDatabase = Firebase.database
 
-        val usersRef = mDatabase.getReference("/users");
-        usersRef.orderByChild("email").equalTo(mAuth.currentUser?.email).addChildEventListener(object:
-            ChildEventListener {
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                snapshot.key?.let { Log.i("App", it) }
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {}
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-
-            override fun onCancelled(error: DatabaseError) {}
-        })
-
         // Screen Elements
         mOperationAdd = findViewById(R.id.history_button_add)
         mOperationAdd.setOnClickListener(this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val userRef = mDatabase.getReference("/users")
+        userRef
+            .orderByChild("email")
+            .equalTo(mAuth.currentUser?.email)
+            .addValueEventListener(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for(children in snapshot.children){
+                        val  user = children.getValue(User::class.java)
+                        user?.operations?.values?.toList()
+                            //todas as tasks são passadas aqui
+                            //todo passar o adapter
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
     }
 
     override fun onClick(view: View?) {
