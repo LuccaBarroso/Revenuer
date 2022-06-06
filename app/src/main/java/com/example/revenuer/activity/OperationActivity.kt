@@ -1,12 +1,11 @@
 package com.example.revenuer.activity
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.revenuer.R
@@ -19,10 +18,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import java.text.SimpleDateFormat
 import java.util.*
 
-class OperationActivity : AppCompatActivity(), View.OnClickListener {
+class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerDialog.OnDateSetListener {
     // Firebase
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDatabase: FirebaseDatabase
@@ -32,13 +30,22 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mExpenseButton: Button
     private lateinit var mOperationName: EditText
     private lateinit var mValue: EditText
-    private lateinit var mDate: Button
+    private lateinit var mDateText: TextView
+    private lateinit var mDateButton: Button
     private lateinit var mCancelButton: Button
     private lateinit var mOkButton: Button
 
     // Action Elements
     private var isRevenuePushed:Boolean = false
-    private lateinit var mDatePickerDialog: DatePickerDialog
+
+    // Date Picker
+    private var mYear:Int = 0
+    private var mMonth:Int = 0
+    private var mDay:Int = 0
+
+    private var mSetYear:Int = 0
+    private var mSetMonth:Int = 0
+    private var mSetDay:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,15 +60,16 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener {
         mExpenseButton = findViewById(R.id.operation_button_expense)
         mOperationName = findViewById(R.id.operation_edittext_name)
         mValue = findViewById(R.id.operation_edittext_value)
-        mDate = findViewById(R.id.operation_button_date)
-        mCancelButton = findViewById(R.id.operation_button_cancel)
-        mOkButton = findViewById(R.id.operation_button_ok)
+        mDateText = findViewById(R.id.operation_textview_date)
+        mDateButton = findViewById(R.id.operation_button_date)
+        mCancelButton = findViewById(R.id.operation_button_left)
+        mOkButton = findViewById(R.id.operation_button_right)
 
         mRevenueButton.setOnClickListener(this)
         mExpenseButton.setOnClickListener(this)
         mCancelButton.setOnClickListener(this)
         mOkButton.setOnClickListener(this)
-        mDate.setOnClickListener(this)
+        mDateButton.setOnClickListener(this)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -78,16 +86,17 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener {
                 mExpenseButton.backgroundTintList = getColorStateList(R.color.red)
             }
             R.id.operation_button_date -> {
-                // TODO: fazer date picker !
+                getDateCalendar()
+                DatePickerDialog(this, this, mYear, mMonth, mDay).show()
             }
-            R.id.operation_button_cancel -> {
+            R.id.operation_button_left -> {
                 finish()
             }
-            R.id.operation_button_ok -> {
+            R.id.operation_button_right -> {
 
                 val name = mOperationName.text.toString().trim()
                 val value = mValue.text.toString().trim()
-                val date = mDate.text.toString().trim()
+                val date = mDateButton.text.toString().trim()
                 val operationType = isRevenuePushed // true = receita (revenue), false = despesa (expense)
 
                 // TODO: erros de entrada - lucca
@@ -130,5 +139,22 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener {
                 })
             }
         }
+    }
+
+    private fun getDateCalendar() {
+        val calendar = Calendar.getInstance()
+        mYear = calendar.get(Calendar.YEAR)
+        mMonth = calendar.get(Calendar.MONTH)
+        mDay = calendar.get(Calendar.DAY_OF_MONTH)
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, day: Int) {
+        mSetYear = year
+        mSetMonth = month
+        mSetDay = day
+
+        getDateCalendar()
+        mDateText.text = "$mSetDay / $mSetMonth / $mSetYear"
     }
 }

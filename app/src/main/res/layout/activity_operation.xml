@@ -39,7 +39,7 @@
             tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/operation_button_cancel"
+            android:id="@+id/operation_button_left"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_marginStart="12dp"
@@ -47,32 +47,32 @@
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/blue"
             android:inputType="textCapSentences"
-            android:text="Cancelar"
+            android:text="Sample"
             android:textSize="24dp"
             android:textStyle="bold"
             app:cornerRadius="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/operation_button_ok"
+            app:layout_constraintEnd_toStartOf="@+id/operation_button_right"
             app:layout_constraintStart_toStartOf="parent"
             app:strokeColor="@color/background"
             app:strokeWidth="6dp"
             tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/operation_button_ok"
+            android:id="@+id/operation_button_right"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/background"
             android:inputType="textCapSentences"
-            android:text="OK"
+            android:text="Sample"
             android:textSize="24dp"
             android:textStyle="bold"
             app:cornerRadius="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/operation_button_cancel"
+            app:layout_constraintStart_toEndOf="@+id/operation_button_left"
             app:strokeColor="@color/background"
             app:strokeWidth="6dp"
             tools:ignore="MissingConstraints" />
@@ -186,21 +186,41 @@
 
         <Button
             android:id="@+id/operation_button_date"
-            android:layout_width="0dp"
-            android:layout_height="82dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="12dp"
-            android:backgroundTint="@color/blue"
+            android:backgroundTint="@color/background"
             android:gravity="center"
             android:inputType="textCapSentences"
-            android:text="dd/mm/yyyy"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:textSize="21dp"
             app:cornerRadius="20dp"
+            app:icon="@drawable/calendar"
+            app:iconGravity="textEnd"
+            app:iconPadding="0dp"
+            app:iconSize="35dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView2"
             app:strokeColor="@color/background"
             app:strokeWidth="6dp"
             tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/operation_textview_date"
+            style="@style/ContainerGeneric2"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/operation_button_date"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toTopOf="@+id/textView2" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
