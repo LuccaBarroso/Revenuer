@@ -1,6 +1,7 @@
 package com.example.revenuer.activity
 
 import android.os.Bundle
+import android.service.autofill.CustomDescription
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -55,6 +56,8 @@ class HistoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(p0: View?) {
+        var dialog = PopupFragment()
 
+        dialog.show(supportFragmentManager, "customPopup")
     }
 }
