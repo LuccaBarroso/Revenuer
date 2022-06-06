@@ -6,7 +6,7 @@
   * Data Base for operations
 * App:
   * Make Login Activity ✅
-  * Make Register Activity
+  * Make Register Activity ✅
   * Make Main Activity
   * Make History Activity
   * Make Pop-ups Activity
@@ -15,7 +15,7 @@
   * Login Activity ✅
   * Register Activity ✅
   * Main Activity ✅
-  * History Activity
-    * Cardview
+  * History Activity ✅
+    * Cardview ✅
   * Pop-ups Activity
   * Graph (Optional)
