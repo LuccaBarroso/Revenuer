@@ -1,4 +1,4 @@
-package com.example.revenuer.activity.entity
+package com.example.revenuer.entity
 
 data class User(
     val id:String,

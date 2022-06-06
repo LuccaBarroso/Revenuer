@@ -1,4 +1,4 @@
-package com.example.revenuer.activity.entity
+package com.example.revenuer.entity
 
 data class Operation(
     val id:Int? = null,

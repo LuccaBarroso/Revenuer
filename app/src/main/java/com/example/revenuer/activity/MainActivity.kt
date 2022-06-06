@@ -1,8 +1,11 @@
 package com.example.revenuer.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
 import com.example.revenuer.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -13,15 +16,20 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
+    // Firebase
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDatabase: FirebaseDatabase
+
+    // Screen Elements
+    private lateinit var historyButton:Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Firebase
         mAuth = Firebase.auth
         mDatabase = Firebase.database
 
@@ -40,5 +48,15 @@ class MainActivity : AppCompatActivity() {
 
             override fun onCancelled(error: DatabaseError) {}
         })
+
+        // Screen Elements:
+        historyButton = findViewById(R.id.main_button_history)
+        historyButton.setOnClickListener(this)
+    }
+
+    override fun onClick(view: View?) {
+        val it = Intent(this, HistoryActivity::class.java)
+        startActivity(it)
+        finish()
     }
 }

@@ -11,7 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.revenuer.R
-import com.example.revenuer.activity.entity.User
+import com.example.revenuer.entity.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
@@ -51,7 +51,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         mRegisterButton.setOnClickListener(this);
     }
 
-    override fun onClick(p0: View?) {
+    override fun onClick(view: View?) {
         //one btn on the scree therefore no need for ifs ahead
         val name = mRegisterName.text.toString();
         val phone = mRegisterPhone.text.toString();
