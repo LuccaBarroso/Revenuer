@@ -76,7 +76,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
             val key = usersRef.push().key ?: ""
             val newUser = User(id = key, name = name, phone = phone, email = email);
             usersRef.child(key).setValue(newUser)
-            Log.i("TAG", newUser.email);
+//            Log.i("TAG", newUser.email);
 
             mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
@@ -88,7 +88,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                        Toast.makeText(baseContext, "Falha ao registrar " + task.exception.toString(),
+                        Toast.makeText(baseContext, "Falha ao registrar! Algo de errado não está certo.",
                             Toast.LENGTH_SHORT).show()
                     }
                 }

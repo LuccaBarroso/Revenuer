@@ -5,16 +5,20 @@
       <map>
         <entry key="app/src/main/res/drawable/container_box.xml" value="0.2035" />
         <entry key="app/src/main/res/drawable/container_line.xml" value="0.2035" />
+        <entry key="app/src/main/res/drawable/shape_container_box.xml" value="0.2035" />
+        <entry key="app/src/main/res/drawable/shape_container_generic1.xml" value="0.2035" />
+        <entry key="app/src/main/res/drawable/shape_container_generic2.xml" value="0.2035" />
         <entry key="app/src/main/res/drawable/shape_container_line.xml" value="0.201" />
         <entry key="app/src/main/res/drawable/shape_edit_text_credential.xml" value="0.201" />
-        <entry key="app/src/main/res/layout/activity_history.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_history.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_loading.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.3656093489148581" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_task.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout/fragment_popup.xml" value="0.29237947122861585" />
         <entry key="app/src/main/res/layout/operation_item.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/reusable.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/reusable.xml" value="0.33" />
       </map>
     </option>
   </component>

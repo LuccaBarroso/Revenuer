@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mDatabase: FirebaseDatabase
 
     // Screen Elements
-    private lateinit var historyButton:Button
+    private lateinit var mHistoryButton:Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,13 +50,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         })
 
         // Screen Elements:
-        historyButton = findViewById(R.id.main_button_history)
-        historyButton.setOnClickListener(this)
+        mHistoryButton = findViewById(R.id.main_button_history)
+        mHistoryButton.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
         val it = Intent(this, HistoryActivity::class.java)
         startActivity(it)
-        finish()
     }
 }
