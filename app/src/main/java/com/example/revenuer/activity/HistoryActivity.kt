@@ -58,6 +58,7 @@ class HistoryActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         val it = Intent(this, OperationActivity::class.java)
+        it.putExtra("isNew", true)
         startActivity(it)
     }
 }
