@@ -1,6 +1,5 @@
 package com.example.revenuer.adapter
 
-import android.R
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,8 +45,16 @@ class HistoryAdapter(val list: List<Operation>): RecyclerView.Adapter<HistoryAda
         holder.dateView.text = operation.date
         if (operation.type) {
 //            holder.imageView.setImageResource(R.drawable.custom_arrow_up)
-        }
+            if (operation.type) {
+                //positivo
+                //setar img não ta funcionando
+//                holder.imageView.setImageResource(com.example.revenuer.R.drawable.arrowup)
+            } else {
+                //negativo
+                holder.imageView.setImageResource(com.example.revenuer.R.drawable.arrowdown)
+            }
 
+        }
     }
 
     override fun getItemCount(): Int {
