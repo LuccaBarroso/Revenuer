@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="65dp"
+    android:layout_height="80dp"
     android:backgroundTint="@color/blue"
     app:cardCornerRadius="50dp">
 
@@ -12,51 +12,63 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/operation_cardview_type"
-            android:layout_width="wrap_content"
+            android:id="@+id/operation_image"
+            android:layout_width="100dp"
             android:layout_height="0dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            tools:srcCompat="@drawable/custom_arrow_up" />
 
         <TextView
             android:id="@+id/sign"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="28dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="40dp"
             android:text="R$ "
             android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/item_cardview_value"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/item_cardview_name" />
 
         <TextView
             android:id="@+id/item_cardview_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="40dp"
             android:text="dd/mm/yyyy"
             android:textColor="#FFFFFF"
-            android:textSize="15dp"
+            android:textSize="13dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sign" />
 
         <TextView
-            android:id="@+id/item_cardview_value"
+            android:id="@+id/item_cardview_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="4dp"
+            android:text="Name"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_cardview_value"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
             android:text="XXX,XX"
             android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/item_cardview_date"
             app:layout_constraintStart_toEndOf="@+id/sign"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/item_cardview_name" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

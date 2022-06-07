@@ -2,6 +2,7 @@ package com.example.revenuer.activity
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -34,18 +35,19 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
     private lateinit var mDateButton: Button
     private lateinit var mCancelButton: Button
     private lateinit var mOkButton: Button
+    private lateinit var mTitle: TextView
 
     // Action Elements
-    private var isRevenuePushed:Boolean = false
+    private var isRevenuePushed: Boolean = false
 
     // Date Picker
-    private var mYear:Int = 0
-    private var mMonth:Int = 0
-    private var mDay:Int = 0
+    private var mYear: Int = 0
+    private var mMonth: Int = 0
+    private var mDay: Int = 0
 
-    private var mSetYear:Int = 0
-    private var mSetMonth:Int = 0
-    private var mSetDay:Int = 0
+    private var mSetYear: Int = 0
+    private var mSetMonth: Int = 0
+    private var mSetDay: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,17 +66,29 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
         mDateButton = findViewById(R.id.operation_button_date)
         mCancelButton = findViewById(R.id.operation_button_left)
         mOkButton = findViewById(R.id.operation_button_right)
+        mTitle = findViewById(R.id.fragment_operation_title)
 
         mRevenueButton.setOnClickListener(this)
         mExpenseButton.setOnClickListener(this)
         mCancelButton.setOnClickListener(this)
         mOkButton.setOnClickListener(this)
         mDateButton.setOnClickListener(this)
+
+        var mIsNew = intent.getBooleanExtra("isNew", true);
+
+
+        if(mIsNew){
+            mTitle.text = "Adicionar Operação"
+            mOkButton.text = "Criar"
+        }else{
+            mTitle.text = "Editar Operação"
+            mOkButton.text = "Editar"
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onClick(view: View?) {
-        when(view?.id) {
+        when (view?.id) {
             R.id.operation_button_revenue -> {
                 isRevenuePushed = true
                 mRevenueButton.backgroundTintList = getColorStateList(R.color.green)
@@ -93,50 +107,78 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
                 finish()
             }
             R.id.operation_button_right -> {
-
                 val name = mOperationName.text.toString().trim()
                 val value = mValue.text.toString().trim()
-                val date = mDateButton.text.toString().trim()
+                val date = mDateText.text.toString().trim()
                 val operationType = isRevenuePushed // true = receita (revenue), false = despesa (expense)
 
-                // TODO: erros de entrada - lucca
+                var isFormFilled = true;
+                isFormFilled = isFormFilled(name, mOperationName) && isFormFilled;
+                isFormFilled = isFormFilled(value, mValue) && isFormFilled;
 
-                val usersRef = mDatabase.getReference("/users");
-                usersRef.orderByChild("email").equalTo(mAuth.currentUser?.email).addChildEventListener(object:
-                    ChildEventListener {
-                    override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                        val operationRef = usersRef
-                            .child(snapshot.key!!)
-                            .child("/operations")
+                if(date == ""){
+                    Toast.makeText(
+                        baseContext, "Uma data válida precisa ser inserida",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }else if(!operationType && mExpenseButton.backgroundTintList  != getColorStateList(R.color.red)){
+                    Toast.makeText(
+                        baseContext, "Selecione entre receita ou despesa",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else if(isFormFilled){
+                    val usersRef = mDatabase.getReference("/users");
+                    val curUser = usersRef.orderByChild("email").equalTo(mAuth.currentUser?.email)
+                        curUser.addChildEventListener(object :
+                            ChildEventListener {
+                            override fun onChildAdded(
+                                snapshot: DataSnapshot,
+                                previousChildName: String?
+                            ) {
+                                val operationRef = usersRef
+                                    .child(snapshot.key!!)
+                                    .child("/operations")
 
-                        val operationId = operationRef
-                            .push()
-                            .key?:""
+                                val operationId = operationRef
+                                    .push()
+                                    .key ?: ""
 
-                        val operation = Operation(
-                            id = operationId,
-                            name = name,
-                            value = value,
-                            date = date,
-                            type = operationType
-                        )
+                                val operation = Operation(
+                                    id = operationId,
+                                    name = name,
+                                    value = value,
+                                    date = date,
+                                    type = operationType
+                                )
 
-                        operationRef
-                            .child(operationId)
-                            .setValue(operation)
+                                operationRef
+                                    .child(operationId)
+                                    .setValue(operation)
 
-                        Toast.makeText(baseContext, "Operação $name cadastrada com sucesso!",
-                            Toast.LENGTH_SHORT).show()
-                    }
+                                Toast.makeText(
+                                    baseContext, "Operação $name cadastrada com sucesso!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                finish()
+                            }
 
-                    override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+                            override fun onChildChanged(
+                                snapshot: DataSnapshot,
+                                previousChildName: String?
+                            ) {
+                            }
 
-                    override fun onChildRemoved(snapshot: DataSnapshot) {}
+                            override fun onChildRemoved(snapshot: DataSnapshot) {}
 
-                    override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+                            override fun onChildMoved(
+                                snapshot: DataSnapshot,
+                                previousChildName: String?
+                            ) {
+                            }
 
-                    override fun onCancelled(error: DatabaseError) {}
-                })
+                            override fun onCancelled(error: DatabaseError) {}
+                        })
+                }
             }
         }
     }
@@ -157,4 +199,14 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
         getDateCalendar()
         mDateText.text = "$mSetDay / $mSetMonth / $mSetYear"
     }
+
+    private fun isFormFilled(value: CharSequence, mOfTheValue: EditText): Boolean {
+        return if (value.isBlank()) {
+            mOfTheValue.error = "Este campo é obrigatório"
+            false
+        }else {
+            true
+        }
+    }
+
 }
