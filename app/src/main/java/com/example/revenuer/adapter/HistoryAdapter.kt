@@ -1,6 +1,5 @@
 package com.example.revenuer.adapter
 
-import android.R
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.revenuer.R
 import com.example.revenuer.activity.HistoryActivity
 import com.example.revenuer.entity.Operation
 import com.example.revenuer.listener.OperationListener
@@ -51,10 +51,10 @@ class HistoryAdapter(val list: List<Operation>): RecyclerView.Adapter<HistoryAda
         if(operation.type){
             //positivo
             //setar img não ta funcionando
-            //holder.imageView.setImageResource(R.drawable.arrow_up)
+            holder.imageView.setImageResource(R.drawable.arrowup)
         }else{
             //negativo
-            holder.imageView.setImageResource(R.drawable.arrow_down_float)
+            holder.imageView.setImageResource(com.example.revenuer.R.drawable.arrowdown)
         }
     }
 
