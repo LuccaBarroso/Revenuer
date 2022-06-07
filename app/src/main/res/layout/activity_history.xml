@@ -37,9 +37,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ConstraintLayout"
         android:layout_width="0dp"
-        android:layout_height="473dp"
+        android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/history_button_add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view5">
@@ -61,8 +63,7 @@
         android:id="@+id/history_button_add"
         android:layout_width="160dp"
         android:layout_height="60dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="36dp"
         android:autoText="false"
         android:backgroundTint="@color/blue"
         android:fontFamily="@font/urbanist"
@@ -75,7 +76,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout"
         app:strokeColor="@color/gold"
         app:strokeWidth="4dp" />
 
