@@ -25,6 +25,10 @@ class HistoryAdapter(val list: List<Operation>): RecyclerView.Adapter<HistoryAda
             view.setOnClickListener{
                 listener?.onListItemClick(view, adapterPosition)
             }
+            view.setOnLongClickListener{
+                listener?.onListItemLongClick(view, adapterPosition)
+                true
+            }
             nameView = view.findViewById(com.example.revenuer.R.id.item_cardview_name)
             valueView = view.findViewById(com.example.revenuer.R.id.item_cardview_value)
             dateView = view.findViewById(com.example.revenuer.R.id.item_cardview_date)

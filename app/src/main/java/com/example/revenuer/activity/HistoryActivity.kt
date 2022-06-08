@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ import com.example.revenuer.R
 import com.example.revenuer.adapter.HistoryAdapter
 import com.example.revenuer.entity.User
 import com.example.revenuer.listener.OperationListener
+import com.google.android.gms.common.internal.constants.ListAppsActivityContract
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -22,11 +24,11 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.text.FieldPosition
 
-
 class HistoryActivity : AppCompatActivity(), OperationListener, View.OnClickListener {
     // Firebase
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDatabase: FirebaseDatabase
+    private var mUserKey = ""
 
     // Screen Elements
     private lateinit var mOperationRecyclerView: RecyclerView
@@ -59,32 +61,53 @@ class HistoryActivity : AppCompatActivity(), OperationListener, View.OnClickList
             .equalTo(mAuth.currentUser?.email)
             .addValueEventListener(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    for(children in snapshot.children){
-                        val  user = children.getValue(User::class.java)
-
-                        //passa no adapter a lista de operações
-                        mOperationAdapter = user?.operations?.values?.toList()?.let { HistoryAdapter(it) }!!
-                        if (mOperationAdapter != null) {
-                            mOperationAdapter.setOnOperationListener(this@HistoryActivity)
-                        }
-                        mOperationRecyclerView.adapter = mOperationAdapter
-                    }
+                    val  user = snapshot.children.first().getValue(User::class.java)
+                    mUserKey = user?.id ?: ""
+                    //passa no adapter a lista de operações
+                    mOperationAdapter = user?.operations?.values?.toList()?.let { HistoryAdapter(it) }!!
+                    mOperationAdapter.setOnOperationListener(this@HistoryActivity)
+                    mOperationRecyclerView.adapter = mOperationAdapter
                 }
-                override fun onCancelled(error: DatabaseError) {
-
-                }
+                override fun onCancelled(error: DatabaseError) {}
             })
     }
+
     override fun onClick(view: View?) {
         val it = Intent(this, OperationActivity::class.java)
-        it.putExtra("isNew", true)
         startActivity(it)
     }
 
     override fun onListItemClick(View: View, position: Int) {
         val it = Intent(this, OperationActivity::class.java)
         it.putExtra("operationKey",  mOperationAdapter.list[position].id)
+        it.putExtra("userKey",  mUserKey)
         startActivity(it)
+    }
+
+    override fun onListItemLongClick(view: View, adapterPosition: Int) {
+        val dialog = AlertDialog.Builder(this)
+        .setTitle("Revenuer")
+        .setMessage("Você deseja excluir a operação?")
+        .setCancelable(false)
+        .setPositiveButton("Sim") { dialog, _ ->
+            val operation = mOperationAdapter.list[adapterPosition] // recebe a operação na posição que quer excluir
+            val operationRef = mDatabase
+                .reference
+                .child("/users")
+                .child(mUserKey)
+                .child("/operations")
+                .child(operation.id)
+
+            operationRef.removeValue()
+
+            dialog.dismiss()
+        }
+        .setNegativeButton("Não") { dialog, _ ->
+            dialog.dismiss()
+        }
+        .create()
+
+        dialog.show()
     }
 }
 

@@ -4,20 +4,17 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.text.Editable
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.revenuer.R
 import com.example.revenuer.entity.Operation
+import com.example.revenuer.entity.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.util.*
@@ -32,8 +29,8 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
     private lateinit var mExpenseButton: Button
     private lateinit var mTitle: TextView
     private lateinit var mOperationName: EditText
-    private lateinit var mValue: EditText
-    private lateinit var mDateText: TextView
+    private lateinit var mOperationValue: EditText
+    private lateinit var mOperationDate: TextView
     private lateinit var mDateButton: Button
     private lateinit var mCancelButton: Button
     private lateinit var mOkButton: Button
@@ -50,13 +47,14 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
     private var mSetMonth: Int = 0
     private var mSetDay: Int = 0
 
+    private var mUserKey = ""
     private var mOperationKey = ""
-    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_operation)
 
+        mUserKey = intent.getStringExtra("userKey") ?: ""
         mOperationKey = intent.getStringExtra("operationKey") ?: ""
 
         // Firebase
@@ -68,8 +66,8 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
         mExpenseButton = findViewById(R.id.operation_button_expense)
         mTitle = findViewById(R.id.operation_textview_title)
         mOperationName = findViewById(R.id.operation_edittext_name)
-        mValue = findViewById(R.id.operation_edittext_value)
-        mDateText = findViewById(R.id.operation_textview_date)
+        mOperationValue = findViewById(R.id.operation_edittext_value)
+        mOperationDate = findViewById(R.id.operation_textview_date)
         mDateButton = findViewById(R.id.operation_button_date)
         mCancelButton = findViewById(R.id.operation_button_left)
         mOkButton = findViewById(R.id.operation_button_right)
@@ -103,73 +101,99 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
             }
             R.id.operation_button_right -> {
                 val name = mOperationName.text.toString().trim()
-                val value = mValue.text.toString().trim()
-                val date = mDateText.text.toString().trim()
+
+                // Se o valor escolido pelo usuário não foi digitado com casas decimais, o programa os coloca automaticamente
+                val value:String =
+                    if (!mOperationValue.text.contains('.')) mOperationValue.text.toString().trim() + ".00"
+                    else mOperationValue.text.toString().trim()
+
+                val date = mOperationDate.text.toString().trim()
                 val operationType = isRevenuePushed // true = receita (revenue), false = despesa (expense)
 
-                var isFormFilled = true;
-                isFormFilled = isFormFilled(name, mOperationName) && isFormFilled;
-                isFormFilled = isFormFilled(value, mValue) && isFormFilled;
+                if (mOperationKey.isBlank()) { // se estiver vazia, irá adicionar uma nova operação
+                    var isFormFilled = true;
+                    isFormFilled = isFormFilled(name, mOperationName) && isFormFilled;
+                    isFormFilled = isFormFilled(value, mOperationValue) && isFormFilled;
 
-                if(date == ""){
+                    if(date == ""){
+                        Toast.makeText(
+                            baseContext, "Uma data válida precisa ser inserida",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }else if(!operationType && mExpenseButton.backgroundTintList  != getColorStateList(R.color.red)){
+                        Toast.makeText(
+                            baseContext, "Selecione entre receita ou despesa",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else if(isFormFilled){
+                        val usersRef = mDatabase.getReference("/users");
+                        val curUser = usersRef.orderByChild("email").equalTo(mAuth.currentUser?.email)
+                        curUser.addChildEventListener(object :
+                            ChildEventListener {
+                            override fun onChildAdded(
+                                snapshot: DataSnapshot,
+                                previousChildName: String?
+                            ) {
+                                val operationRef = usersRef
+                                    .child(snapshot.key!!)
+                                    .child("/operations")
+
+                                val operationId = operationRef
+                                    .push()
+                                    .key ?: ""
+
+                                val operation = Operation(
+                                    id = operationId,
+                                    name = name,
+                                    value = value,
+                                    date = date,
+                                    type = operationType
+                                )
+
+                                operationRef
+                                    .child(operationId)
+                                    .setValue(operation)
+
+                                Toast.makeText(
+                                    baseContext, "Operação \"$name\" cadastrada com sucesso!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                finish()
+                            }
+
+                            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+
+                            override fun onChildRemoved(snapshot: DataSnapshot) {}
+
+                            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+
+                            override fun onCancelled(error: DatabaseError) {}
+                        })
+                    }
+                }
+                else { // se estiver preenchida, irá editar uma operação
+                    val operation = Operation(mOperationKey, name, value, date, operationType)
+
+                    val operationRef = mDatabase
+                        .reference
+                        .child("/users")
+                        .child(mUserKey)
+                        .child("/operations")
+                        .child(mOperationKey)
+
+                    operationRef.setValue(operation)
+
                     Toast.makeText(
-                        baseContext, "Uma data válida precisa ser inserida",
+                        baseContext, "Operação \"$name\" atualizada com sucesso!",
                         Toast.LENGTH_SHORT
                     ).show()
-                }else if(!operationType && mExpenseButton.backgroundTintList  != getColorStateList(R.color.red)){
-                    Toast.makeText(
-                        baseContext, "Selecione entre receita ou despesa",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else if(isFormFilled){
-                    val usersRef = mDatabase.getReference("/users");
-                    val curUser = usersRef.orderByChild("email").equalTo(mAuth.currentUser?.email)
-                    curUser.addChildEventListener(object :
-                        ChildEventListener {
-                        override fun onChildAdded(
-                            snapshot: DataSnapshot,
-                            previousChildName: String?
-                        ) {
-                            val operationRef = usersRef
-                                .child(snapshot.key!!)
-                                .child("/operations")
-
-                            val operationId = operationRef
-                                .push()
-                                .key ?: ""
-
-                            val operation = Operation(
-                                id = operationId,
-                                name = name,
-                                value = value,
-                                date = date,
-                                type = operationType
-                            )
-
-                            operationRef
-                                .child(operationId)
-                                .setValue(operation)
-
-                            Toast.makeText(
-                                baseContext, "Operação $name cadastrada com sucesso!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            finish()
-                        }
-
-                        override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
-
-                        override fun onChildRemoved(snapshot: DataSnapshot) {}
-
-                        override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-
-                        override fun onCancelled(error: DatabaseError) {}
-                    })
+                    finish()
                 }
             }
         }
     }
 
+    // Editando  ou Adicionado operação
     override fun onResume() {
         super.onResume()
 
@@ -178,7 +202,35 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
             mOkButton.text = "Criar"
         } else {
             mTitle.text = "Editar Operação"
-            mOkButton.text = "Editar"
+            mOkButton.text = "Salvar"
+
+            val userRef = mDatabase.getReference("/users")
+            userRef
+                .orderByChild("email")
+                .equalTo(mAuth.currentUser?.email!!)
+                .addValueEventListener(object : ValueEventListener{
+                    @RequiresApi(Build.VERSION_CODES.M)
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val user = snapshot.children.first().getValue(User::class.java)
+                        val operation = user?.operations?.values?.find { it.id == mOperationKey }
+                        mOperationName.text = Editable.Factory.getInstance().newEditable(operation?.name)
+                        mOperationValue.text = Editable.Factory.getInstance().newEditable(operation?.value)
+                        mOperationDate.text = Editable.Factory.getInstance().newEditable(operation?.date)
+                        isRevenuePushed = operation!!.type
+
+                        // DEtermina qual o tipo da operação
+                        if (isRevenuePushed) {
+                            mRevenueButton.backgroundTintList = getColorStateList(R.color.green)
+                            mExpenseButton.backgroundTintList = getColorStateList(R.color.blue)
+                        }
+                        else {
+                            mRevenueButton.backgroundTintList = getColorStateList(R.color.blue)
+                            mExpenseButton.backgroundTintList = getColorStateList(R.color.red)
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {}
+                })
         }
     }
 
@@ -196,7 +248,7 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
         mSetDay = day
 
         getDateCalendar()
-        mDateText.text = "$mSetDay / $mSetMonth / $mSetYear"
+        mOperationDate.text = "$mSetDay / $mSetMonth / $mSetYear"
     }
 
     private fun isFormFilled(value: CharSequence, mOfTheValue: EditText): Boolean {
