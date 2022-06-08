@@ -10,6 +10,9 @@
   * Make Main Activity
   * Make History Activity ✅
   * Make Pop-ups Activity ⛔
+  * Make Operation Activity
+    * Add Opoeration ✅
+    * Edit Operation
   * Make Graph (Optional)
 * Design:
   * Login Activity ✅
