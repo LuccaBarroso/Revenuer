@@ -8,8 +8,8 @@
   * Make Login Activity ✅
   * Make Register Activity ✅
   * Make Main Activity
-  * Make History Activity
-  * Make Pop-ups Activity
+  * Make History Activity ✅
+  * Make Pop-ups Activity ⛔
   * Make Graph (Optional)
 * Design:
   * Login Activity ✅
@@ -17,5 +17,5 @@
   * Main Activity ✅
   * History Activity ✅
     * Cardview ✅
-  * Pop-ups Activity
+  * Pop-ups Activity ⛔
   * Graph (Optional)
