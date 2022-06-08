@@ -22,7 +22,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 
-class HistoryActivity : AppCompatActivity(), View.OnClickListener {
+class HistoryActivity : AppCompatActivity(), OperationListener, View.OnClickListener {
     // Firebase
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDatabase: FirebaseDatabase
@@ -64,26 +64,29 @@ class HistoryActivity : AppCompatActivity(), View.OnClickListener {
                         //passa no adapter a lista de operações
                         val adapter = user?.operations?.values?.toList()?.let { HistoryAdapter(it) }
                         if (adapter != null) {
-                            adapter.setOnOperationListener(this)
+                            adapter.setOnOperationListener(this@HistoryActivity)
                         }
                         mOperationRecyclerView.adapter = adapter
                     }
                 }
-
                 override fun onCancelled(error: DatabaseError) {
 
                 }
-
                 override fun onListItemClick(View: View, adapterPosition: Int) {
                     //item clicado
                     Log.i("App", "clicado")
                 }
             })
     }
-
     override fun onClick(view: View?) {
         val it = Intent(this, OperationActivity::class.java)
         it.putExtra("isNew", true)
+        startActivity(it)
+    }
+
+    override fun onListItemClick(View: View, adapterPosition: Int) {
+        val it = Intent(this, OperationActivity::class.java)
+        it.putExtra("isNew", false)
         startActivity(it)
     }
 }

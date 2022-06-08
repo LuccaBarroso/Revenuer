@@ -49,6 +49,8 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
     private var mSetMonth: Int = 0
     private var mSetDay: Int = 0
 
+    var mIsNew = intent.getBooleanExtra("isNew", true);
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_operation)
@@ -73,9 +75,6 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
         mCancelButton.setOnClickListener(this)
         mOkButton.setOnClickListener(this)
         mDateButton.setOnClickListener(this)
-
-        var mIsNew = intent.getBooleanExtra("isNew", true);
-
 
         if(mIsNew){
             mTitle.text = "Adicionar Operação"
@@ -129,55 +128,55 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
                 } else if(isFormFilled){
                     val usersRef = mDatabase.getReference("/users");
                     val curUser = usersRef.orderByChild("email").equalTo(mAuth.currentUser?.email)
-                        curUser.addChildEventListener(object :
-                            ChildEventListener {
-                            override fun onChildAdded(
-                                snapshot: DataSnapshot,
-                                previousChildName: String?
-                            ) {
-                                val operationRef = usersRef
-                                    .child(snapshot.key!!)
-                                    .child("/operations")
+                    curUser.addChildEventListener(object :
+                        ChildEventListener {
+                        override fun onChildAdded(
+                            snapshot: DataSnapshot,
+                            previousChildName: String?
+                        ) {
+                            val operationRef = usersRef
+                                .child(snapshot.key!!)
+                                .child("/operations")
 
-                                val operationId = operationRef
-                                    .push()
-                                    .key ?: ""
+                            val operationId = operationRef
+                                .push()
+                                .key ?: ""
 
-                                val operation = Operation(
-                                    id = operationId,
-                                    name = name,
-                                    value = value,
-                                    date = date,
-                                    type = operationType
-                                )
+                            val operation = Operation(
+                                id = operationId,
+                                name = name,
+                                value = value,
+                                date = date,
+                                type = operationType
+                            )
 
-                                operationRef
-                                    .child(operationId)
-                                    .setValue(operation)
+                            operationRef
+                                .child(operationId)
+                                .setValue(operation)
 
-                                Toast.makeText(
-                                    baseContext, "Operação $name cadastrada com sucesso!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                finish()
-                            }
+                            Toast.makeText(
+                                baseContext, "Operação $name cadastrada com sucesso!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            finish()
+                        }
 
-                            override fun onChildChanged(
-                                snapshot: DataSnapshot,
-                                previousChildName: String?
-                            ) {
-                            }
+                        override fun onChildChanged(
+                            snapshot: DataSnapshot,
+                            previousChildName: String?
+                        ) {
+                        }
 
-                            override fun onChildRemoved(snapshot: DataSnapshot) {}
+                        override fun onChildRemoved(snapshot: DataSnapshot) {}
 
-                            override fun onChildMoved(
-                                snapshot: DataSnapshot,
-                                previousChildName: String?
-                            ) {
-                            }
+                        override fun onChildMoved(
+                            snapshot: DataSnapshot,
+                            previousChildName: String?
+                        ) {
+                        }
 
-                            override fun onCancelled(error: DatabaseError) {}
-                        })
+                        override fun onCancelled(error: DatabaseError) {}
+                    })
                 }
             }
         }
