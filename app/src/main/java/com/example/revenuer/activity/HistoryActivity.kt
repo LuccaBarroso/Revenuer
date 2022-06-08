@@ -28,10 +28,10 @@ class HistoryActivity : AppCompatActivity(), OperationListener, View.OnClickList
     private lateinit var mDatabase: FirebaseDatabase
 
     // Screen Elements
-    private lateinit var mOperationList: RecyclerView
+    private lateinit var mOperationRecyclerView: RecyclerView
     private lateinit var mOperationAdd: Button
 
-    private lateinit var mOperationRecyclerView: RecyclerView
+    private lateinit var mOperationAdapter: HistoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,9 +84,10 @@ class HistoryActivity : AppCompatActivity(), OperationListener, View.OnClickList
         startActivity(it)
     }
 
+    // TODO: Concertar erro "lateinit property mOperationAdapter has not been initialized"
     override fun onListItemClick(View: View, adapterPosition: Int) {
         val it = Intent(this, OperationActivity::class.java)
-        it.putExtra("isNew", false)
+        it.putExtra("operationKey", mOperationAdapter.list[adapterPosition].id)
         startActivity(it)
     }
 }

@@ -2,9 +2,10 @@ package com.example.revenuer.activity
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -29,13 +30,13 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
     // Screen Elements
     private lateinit var mRevenueButton: Button
     private lateinit var mExpenseButton: Button
+    private lateinit var mTitle: TextView
     private lateinit var mOperationName: EditText
     private lateinit var mValue: EditText
     private lateinit var mDateText: TextView
     private lateinit var mDateButton: Button
     private lateinit var mCancelButton: Button
     private lateinit var mOkButton: Button
-    private lateinit var mTitle: TextView
 
     // Action Elements
     private var isRevenuePushed: Boolean = false
@@ -49,11 +50,14 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
     private var mSetMonth: Int = 0
     private var mSetDay: Int = 0
 
-    var mIsNew = intent.getBooleanExtra("isNew", true);
+    private var mOperationKey = ""
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_operation)
+
+        mOperationKey = intent.getStringExtra("operationKey") ?: ""
 
         // Firebase
         mAuth = Firebase.auth
@@ -62,27 +66,19 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
         // Screen Elements
         mRevenueButton = findViewById(R.id.operation_button_revenue)
         mExpenseButton = findViewById(R.id.operation_button_expense)
+        mTitle = findViewById(R.id.operation_textview_title)
         mOperationName = findViewById(R.id.operation_edittext_name)
         mValue = findViewById(R.id.operation_edittext_value)
         mDateText = findViewById(R.id.operation_textview_date)
         mDateButton = findViewById(R.id.operation_button_date)
         mCancelButton = findViewById(R.id.operation_button_left)
         mOkButton = findViewById(R.id.operation_button_right)
-        mTitle = findViewById(R.id.fragment_operation_title)
 
         mRevenueButton.setOnClickListener(this)
         mExpenseButton.setOnClickListener(this)
         mCancelButton.setOnClickListener(this)
         mOkButton.setOnClickListener(this)
         mDateButton.setOnClickListener(this)
-
-        if(mIsNew){
-            mTitle.text = "Adicionar Operação"
-            mOkButton.text = "Criar"
-        }else{
-            mTitle.text = "Editar Operação"
-            mOkButton.text = "Editar"
-        }
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -161,24 +157,29 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
                             finish()
                         }
 
-                        override fun onChildChanged(
-                            snapshot: DataSnapshot,
-                            previousChildName: String?
-                        ) {
-                        }
+                        override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
 
                         override fun onChildRemoved(snapshot: DataSnapshot) {}
 
-                        override fun onChildMoved(
-                            snapshot: DataSnapshot,
-                            previousChildName: String?
-                        ) {
-                        }
+                        override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
 
                         override fun onCancelled(error: DatabaseError) {}
                     })
                 }
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if(mOperationKey.isBlank()) {
+            mTitle.text = "Adicionar Operação"
+            mOkButton.text = "Criar"
+        }
+        else {
+            mTitle.text = "Editar Operação"
+            mOkButton.text = "Editar"
         }
     }
 
