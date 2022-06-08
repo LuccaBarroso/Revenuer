@@ -176,8 +176,7 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
         if(mOperationKey.isBlank()) {
             mTitle.text = "Adicionar Operação"
             mOkButton.text = "Criar"
-        }
-        else {
+        } else {
             mTitle.text = "Editar Operação"
             mOkButton.text = "Editar"
         }

@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.text.FieldPosition
 
 
 class HistoryActivity : AppCompatActivity(), OperationListener, View.OnClickListener {
@@ -56,25 +57,21 @@ class HistoryActivity : AppCompatActivity(), OperationListener, View.OnClickList
         userRef
             .orderByChild("email")
             .equalTo(mAuth.currentUser?.email)
-            .addValueEventListener(object: ValueEventListener, OperationListener {
+            .addValueEventListener(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for(children in snapshot.children){
                         val  user = children.getValue(User::class.java)
 
                         //passa no adapter a lista de operações
-                        val adapter = user?.operations?.values?.toList()?.let { HistoryAdapter(it) }
-                        if (adapter != null) {
-                            adapter.setOnOperationListener(this@HistoryActivity)
+                        mOperationAdapter = user?.operations?.values?.toList()?.let { HistoryAdapter(it) }!!
+                        if (mOperationAdapter != null) {
+                            mOperationAdapter.setOnOperationListener(this@HistoryActivity)
                         }
-                        mOperationRecyclerView.adapter = adapter
+                        mOperationRecyclerView.adapter = mOperationAdapter
                     }
                 }
                 override fun onCancelled(error: DatabaseError) {
 
-                }
-                override fun onListItemClick(View: View, adapterPosition: Int) {
-                    //item clicado
-                    Log.i("App", "clicado")
                 }
             })
     }
@@ -84,10 +81,9 @@ class HistoryActivity : AppCompatActivity(), OperationListener, View.OnClickList
         startActivity(it)
     }
 
-    // TODO: Concertar erro "lateinit property mOperationAdapter has not been initialized"
-    override fun onListItemClick(View: View, adapterPosition: Int) {
+    override fun onListItemClick(View: View, position: Int) {
         val it = Intent(this, OperationActivity::class.java)
-        it.putExtra("operationKey", mOperationAdapter.list[adapterPosition].id)
+        it.putExtra("operationKey",  mOperationAdapter.list[position].id)
         startActivity(it)
     }
 }
