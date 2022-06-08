@@ -20,5 +20,6 @@
   * Main Activity ✅
   * History Activity ✅
     * Cardview ✅
+  * Operation Activity ✅
   * Pop-ups Activity ⛔
   * Graph (Optional)
