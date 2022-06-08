@@ -45,8 +45,7 @@ class HistoryActivity : AppCompatActivity(), View.OnClickListener {
         mOperationAdd = findViewById(R.id.history_button_add)
         mOperationAdd.setOnClickListener(this)
 
-        mOperationRecyclerView = findViewById(R.id.main_recyclerview_history)
-
+        mOperationRecyclerView = findViewById(R.id.history_recyclerview_operation)
         mOperationRecyclerView.layoutManager = LinearLayoutManager(this)
     }
 
@@ -68,7 +67,6 @@ class HistoryActivity : AppCompatActivity(), View.OnClickListener {
                             adapter.setOnOperationListener(this)
                         }
                         mOperationRecyclerView.adapter = adapter
-
                     }
                 }
 
