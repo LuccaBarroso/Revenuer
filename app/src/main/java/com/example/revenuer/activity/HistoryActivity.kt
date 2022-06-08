@@ -61,7 +61,7 @@ class HistoryActivity : AppCompatActivity(), OperationListener, View.OnClickList
             .equalTo(mAuth.currentUser?.email)
             .addValueEventListener(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val  user = snapshot.children.first().getValue(User::class.java)
+                    val user = snapshot.children.first().getValue(User::class.java)
                     mUserKey = user?.id ?: ""
                     //passa no adapter a lista de operações
                     mOperationAdapter = user?.operations?.values?.toList()?.let { HistoryAdapter(it) }!!

@@ -103,31 +103,37 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
                 val name = mOperationName.text.toString().trim()
 
                 // Se o valor escolido pelo usuário não foi digitado com casas decimais, o programa os coloca automaticamente
-                val value:String =
-                    if (!mOperationValue.text.contains('.')) mOperationValue.text.toString().trim() + ".00"
+                val value: String =
+                    if (!mOperationValue.text.contains('.')) mOperationValue.text.toString()
+                        .trim() + ".00"
                     else mOperationValue.text.toString().trim()
 
                 val date = mOperationDate.text.toString().trim()
-                val operationType = isRevenuePushed // true = receita (revenue), false = despesa (expense)
+                val operationType =
+                    isRevenuePushed // true = receita (revenue), false = despesa (expense)
 
                 if (mOperationKey.isBlank()) { // se estiver vazia, irá adicionar uma nova operação
                     var isFormFilled = true;
                     isFormFilled = isFormFilled(name, mOperationName) && isFormFilled;
                     isFormFilled = isFormFilled(value, mOperationValue) && isFormFilled;
 
-                    if(date == ""){
+                    if (date == "") {
                         Toast.makeText(
                             baseContext, "Uma data válida precisa ser inserida",
                             Toast.LENGTH_SHORT
                         ).show()
-                    }else if(!operationType && mExpenseButton.backgroundTintList  != getColorStateList(R.color.red)){
+                    } else if (!operationType && mExpenseButton.backgroundTintList != getColorStateList(
+                            R.color.red
+                        )
+                    ) {
                         Toast.makeText(
                             baseContext, "Selecione entre receita ou despesa",
                             Toast.LENGTH_SHORT
                         ).show()
-                    } else if(isFormFilled){
+                    } else if (isFormFilled) {
                         val usersRef = mDatabase.getReference("/users");
-                        val curUser = usersRef.orderByChild("email").equalTo(mAuth.currentUser?.email)
+                        val curUser =
+                            usersRef.orderByChild("email").equalTo(mAuth.currentUser?.email)
                         curUser.addChildEventListener(object :
                             ChildEventListener {
                             override fun onChildAdded(
@@ -161,17 +167,24 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
                                 finish()
                             }
 
-                            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+                            override fun onChildChanged(
+                                snapshot: DataSnapshot,
+                                previousChildName: String?
+                            ) {
+                            }
 
                             override fun onChildRemoved(snapshot: DataSnapshot) {}
 
-                            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+                            override fun onChildMoved(
+                                snapshot: DataSnapshot,
+                                previousChildName: String?
+                            ) {
+                            }
 
                             override fun onCancelled(error: DatabaseError) {}
                         })
                     }
-                }
-                else { // se estiver preenchida, irá editar uma operação
+                } else { // se estiver preenchida, irá editar uma operação
                     val operation = Operation(mOperationKey, name, value, date, operationType)
 
                     val operationRef = mDatabase
@@ -197,7 +210,7 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
     override fun onResume() {
         super.onResume()
 
-        if(mOperationKey.isBlank()) {
+        if (mOperationKey.isBlank()) {
             mTitle.text = "Adicionar Operação"
             mOkButton.text = "Criar"
         } else {
@@ -208,7 +221,7 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
             userRef
                 .orderByChild("email")
                 .equalTo(mAuth.currentUser?.email!!)
-                .addValueEventListener(object : ValueEventListener{
+                .addValueEventListener(object : ValueEventListener {
                     @RequiresApi(Build.VERSION_CODES.M)
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val user = snapshot.children.first().getValue(User::class.java)
@@ -218,12 +231,11 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
                         mOperationDate.text = Editable.Factory.getInstance().newEditable(operation?.date)
                         isRevenuePushed = operation!!.type
 
-                        // DEtermina qual o tipo da operação
+                        // Determina qual o tipo da operação
                         if (isRevenuePushed) {
                             mRevenueButton.backgroundTintList = getColorStateList(R.color.green)
                             mExpenseButton.backgroundTintList = getColorStateList(R.color.blue)
-                        }
-                        else {
+                        } else {
                             mRevenueButton.backgroundTintList = getColorStateList(R.color.blue)
                             mExpenseButton.backgroundTintList = getColorStateList(R.color.red)
                         }
@@ -259,5 +271,4 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
             true
         }
     }
-
 }
