@@ -4,6 +4,7 @@
   * Login Authentication ✅
   * Register User function ✅
   * Data Base for operations ✅
+  * Check for double emails
 * App:
   * Make Login Activity ✅
   * Make Register Activity ✅
