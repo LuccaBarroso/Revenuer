@@ -3,13 +3,15 @@ package com.example.revenuer.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.revenuer.entity.Operation
 import com.example.revenuer.listener.OperationListener
 
-class HistoryAdapter(val list: List<Operation>): RecyclerView.Adapter<HistoryAdapter.OperationViewHolder>() {
+class HistoryAdapter(val list: List<Operation>): RecyclerView.Adapter<HistoryAdapter.OperationViewHolder>(), Filterable {
     private var listener: OperationListener? = null
 
     fun setOnOperationListener(listener: OperationListener){
@@ -57,5 +59,9 @@ class HistoryAdapter(val list: List<Operation>): RecyclerView.Adapter<HistoryAda
 
     override fun getItemCount(): Int {
         return list.size
+    }
+
+    override fun getFilter(): Filter {
+        // TODO: checar se é possível utilizar um filtro para mostrar na main activity
     }
 }

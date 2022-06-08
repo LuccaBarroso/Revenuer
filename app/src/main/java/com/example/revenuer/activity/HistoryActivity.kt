@@ -34,6 +34,7 @@ class HistoryActivity : AppCompatActivity(), OperationListener, View.OnClickList
     private lateinit var mOperationRecyclerView: RecyclerView
     private lateinit var mOperationAdd: Button
 
+    // Adapter
     private lateinit var mOperationAdapter: HistoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {

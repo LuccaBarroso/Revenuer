@@ -6,13 +6,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.revenuer.R
+import com.example.revenuer.adapter.HistoryAdapter
+import com.example.revenuer.entity.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -21,9 +22,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     // Firebase
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDatabase: FirebaseDatabase
+    private var mUserKey = ""
 
     // Screen Elements
+    private lateinit var mRevenueRecyclerView: RecyclerView
+    private lateinit var mExpenseRecyclerView: RecyclerView
     private lateinit var mHistoryButton:Button
+
+    // Adapter
+    private lateinit var mOperationAdapter: HistoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +59,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         // Screen Elements:
         mHistoryButton = findViewById(R.id.main_button_history)
         mHistoryButton.setOnClickListener(this)
+
+        mRevenueRecyclerView = findViewById(R.id.main_recyclerview_revenue)
+        mRevenueRecyclerView.layoutManager = LinearLayoutManager(this)
+        mExpenseRecyclerView = findViewById(R.id.main_recyclerview_expense)
+        mExpenseRecyclerView.layoutManager = LinearLayoutManager(this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val userRef = mDatabase.getReference("/users")
     }
 
     override fun onClick(view: View?) {

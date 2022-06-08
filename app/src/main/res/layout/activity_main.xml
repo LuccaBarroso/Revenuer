@@ -70,7 +70,7 @@
         app:layout_constraintTop_toBottomOf="@+id/main_textview_receitas">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/main_recyclerview_receitas"
+            android:id="@+id/main_recyclerview_revenue"
             android:layout_width="0dp"
             android:layout_height="183dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -131,7 +131,7 @@
         app:layout_constraintTop_toBottomOf="@+id/main_textview_despesas">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/main_recyclerview_despesas"
+            android:id="@+id/main_recyclerview_expense"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
