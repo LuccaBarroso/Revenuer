@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.text.FieldPosition
+import java.text.SimpleDateFormat
 
 class HistoryActivity : AppCompatActivity(), OperationListener, View.OnClickListener {
     // Firebase
@@ -36,6 +37,8 @@ class HistoryActivity : AppCompatActivity(), OperationListener, View.OnClickList
 
     // Adapter
     private lateinit var mOperationAdapter: HistoryAdapter
+
+    var  formatoDataHora = SimpleDateFormat("dd/M/yyyy");
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +68,7 @@ class HistoryActivity : AppCompatActivity(), OperationListener, View.OnClickList
                     val user = snapshot.children.first().getValue(User::class.java)
                     mUserKey = user?.id ?: ""
                     //passa no adapter a lista de operações
-                    mOperationAdapter = user?.operations?.values?.toList()?.let { HistoryAdapter(it) }!!
+                    mOperationAdapter = user?.operations?.values?.sortedByDescending{formatoDataHora.parse(it.date.replace(" ", ""))}?.toList()?.let { HistoryAdapter(it) }!!
                     mOperationAdapter.setOnOperationListener(this@HistoryActivity)
                     mOperationRecyclerView.adapter = mOperationAdapter
                 }

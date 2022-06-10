@@ -6,18 +6,25 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.revenuer.R
 import com.example.revenuer.adapter.HistoryAdapter
 import com.example.revenuer.entity.User
+import com.example.revenuer.listener.OperationListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener, OperationListener {
 
     // Firebase
     private lateinit var mAuth: FirebaseAuth
@@ -30,7 +37,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mHistoryButton:Button
 
     // Adapter
-    private lateinit var mOperationAdapter: HistoryAdapter
+    private lateinit var mRevenueAdapter: HistoryAdapter
+    private lateinit var mExpenseAdapter: HistoryAdapter
+
+    var  formatoDataHora = SimpleDateFormat("dd/M/yyyy");
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,10 +80,107 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onStart()
 
         val userRef = mDatabase.getReference("/users")
+        userRef
+            .orderByChild("email")
+            .equalTo(mAuth.currentUser?.email)
+            .addValueEventListener(object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user = snapshot.children.first().getValue(User::class.java)
+                    mUserKey = user?.id ?: ""
+
+                    //Adapter das operações positivas
+                    var positivas = user?.operations?.values?.toList()?.filter{
+                        it.type == true
+                    }?.sortedByDescending{formatoDataHora.parse(it.date.replace(" ", ""))}?.take(5)
+
+                    Log.i("App", "as 5 positivas mais recentes = "+positivas.toString())
+                    mRevenueAdapter = positivas?.toList()?.let { HistoryAdapter(it) }!!
+                    mRevenueAdapter.setOnOperationListener(this@MainActivity)
+                    mRevenueRecyclerView.adapter = mRevenueAdapter
+
+                    //Adapter das operações negativas
+                    var negativas = user?.operations?.values?.toList()?.filter{
+                        it.type == false
+                    }?.sortedByDescending{formatoDataHora.parse(it.date.replace(" ", ""))}?.take(5)
+
+                    Log.i("App", negativas.toString())
+                    mExpenseAdapter = negativas?.toList()?.let { HistoryAdapter(it) }!!
+                    mExpenseAdapter.setOnOperationListener(this@MainActivity)
+                    mExpenseRecyclerView.adapter = mExpenseAdapter
+                }
+                override fun onCancelled(error: DatabaseError) {}
+            })
     }
 
     override fun onClick(view: View?) {
         val it = Intent(this, HistoryActivity::class.java)
         startActivity(it)
     }
+
+    override fun onListItemClick(view: View, position: Int) {
+        if( view.parent == mRevenueRecyclerView) {
+            val it = Intent(this, OperationActivity::class.java)
+            it.putExtra("operationKey",  mRevenueAdapter.list[position].id)
+            it.putExtra("userKey",  mUserKey)
+            startActivity(it)
+        }else{
+            val it = Intent(this, OperationActivity::class.java)
+            it.putExtra("operationKey",  mExpenseAdapter.list[position].id)
+            it.putExtra("userKey",  mUserKey)
+            startActivity(it)
+        }
+    }
+
+    override fun onListItemLongClick(view: View, adapterPosition: Int) {
+        if(view.parent == mRevenueRecyclerView) {
+            val dialog = AlertDialog.Builder(this)
+                .setTitle("Revenuer")
+                .setMessage("Você deseja excluir a operação?")
+                .setCancelable(false)
+                .setPositiveButton("Sim") { dialog, _ ->
+                    val operation = mRevenueAdapter.list[adapterPosition] // recebe a operação na posição que quer excluir
+                    val operationRef = mDatabase
+                        .reference
+                        .child("/users")
+                        .child(mUserKey)
+                        .child("/operations")
+                        .child(operation.id)
+
+                    operationRef.removeValue()
+
+                    dialog.dismiss()
+                }
+                .setNegativeButton("Não") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+
+            dialog.show()
+        }else{
+            val dialog = AlertDialog.Builder(this)
+                .setTitle("Revenuer")
+                .setMessage("Você deseja excluir a operação?")
+                .setCancelable(false)
+                .setPositiveButton("Sim") { dialog, _ ->
+                    val operation = mExpenseAdapter.list[adapterPosition] // recebe a operação na posição que quer excluir
+                    val operationRef = mDatabase
+                        .reference
+                        .child("/users")
+                        .child(mUserKey)
+                        .child("/operations")
+                        .child(operation.id)
+
+                    operationRef.removeValue()
+
+                    dialog.dismiss()
+                }
+                .setNegativeButton("Não") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+
+            dialog.show()
+        }
+    }
+
 }
