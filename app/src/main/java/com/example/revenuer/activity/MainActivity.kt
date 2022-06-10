@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, OperationListene
     private lateinit var mRevenueRecyclerView: RecyclerView
     private lateinit var mExpenseRecyclerView: RecyclerView
     private lateinit var mHistoryButton:Button
+    private lateinit var mTextViewAmount: TextView
 
     // Adapter
     private lateinit var mRevenueAdapter: HistoryAdapter
@@ -69,6 +71,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, OperationListene
         // Screen Elements:
         mHistoryButton = findViewById(R.id.main_button_history)
         mHistoryButton.setOnClickListener(this)
+        mTextViewAmount = findViewById(R.id.main_textview_amount)
 
         mRevenueRecyclerView = findViewById(R.id.main_recyclerview_revenue)
         mRevenueRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -87,6 +90,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, OperationListene
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val user = snapshot.children.first().getValue(User::class.java)
                     mUserKey = user?.id ?: ""
+
+                    var somatorio = 0.0
+
+                    for(prop in user?.operations?.values?.toList()!!){
+                        if(prop.type) {
+                            somatorio += prop.value.toFloat();
+                        }else{
+                            somatorio -= prop.value.toFloat();
+                        }
+                    }
+                    mTextViewAmount.text = "%.2f".format(somatorio)
 
                     //Adapter das operações positivas
                     var positivas = user?.operations?.values?.toList()?.filter{
