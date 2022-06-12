@@ -23,7 +23,7 @@
         android:layout_width="0dp"
         android:layout_height="90dp"
         android:gravity="bottom|center|left"
-        android:text="XXX,XX"
+        android:text="00,00"
         android:textColor="#FFFFFF"
         android:textSize="48dp"
         android:textStyle="bold"

@@ -226,10 +226,12 @@ class OperationActivity : AppCompatActivity(), View.OnClickListener, DatePickerD
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val user = snapshot.children.first().getValue(User::class.java)
                         val operation = user?.operations?.values?.find { it.id == mOperationKey }
-                        mOperationName.text = Editable.Factory.getInstance().newEditable(operation?.name)
-                        mOperationValue.text = Editable.Factory.getInstance().newEditable(operation?.value)
-                        mOperationDate.text = Editable.Factory.getInstance().newEditable(operation?.date)
-                        isRevenuePushed = operation!!.type
+                        if (operation != null) {
+                            mOperationName.text = Editable.Factory.getInstance().newEditable(operation?.name)
+                            mOperationValue.text = Editable.Factory.getInstance().newEditable(operation?.value)
+                            mOperationDate.text = Editable.Factory.getInstance().newEditable(operation?.date)
+                            isRevenuePushed = operation!!.type
+                        }
 
                         // Determina qual o tipo da operação
                         if (isRevenuePushed) {
